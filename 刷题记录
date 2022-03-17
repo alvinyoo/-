@@ -157,12 +157,50 @@ class Solution:
 ==================================================================================================================================================================
 
 
+973. K Closest Points to Origin
+Medium
+Logic:
+	Precompute the Euclidean distances of each point. Store the distance and position in a list
+	Sort the list by distance
+	Retrieve top kth element
+	
+Code:
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        return self.method(points, k)
+        
+    def distance(self, point1, point2=[0, 0]):
+        dx = (point1[0] - point2[0]) ** 2
+        dy = (point1[1] - point2[1]) ** 2
+        return (dx + dy) ** 0.5
+    
+    def method(self, points, k):
+        """
+        Time: O(NlogN)
+        """
+        d, ans = [], []
+        for i in range(len(points)):  # O(N)
+            temp = self.distance(points[i])
+            d.append([temp, i])
+        d.sort(key=lambda x: x[0])  # O(NlogN)
+        
+        for i in d[:k]:  # O(K)
+            ans.append(points[i[1]])
+        return ans
+
+
+==================================================================================================================================================================
+
+
 0000. HeadLine
 Difficulty
 Logic:
 	Logic
 Code:
 Code    
-    
+        return -1 if temp > cols else temp
+
+
+
     
 
