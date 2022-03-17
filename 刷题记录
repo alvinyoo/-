@@ -1,1 +1,168 @@
 
+953. Verifying an Alien Dictionary
+Easy
+Logic: 
+	Use a for loop to go through all word in words list, for each word, use an inner for loop to check the order of letters.
+	Retrieve the order of the alphabet, we could use a map since retrieve data from a map, the time complexity will be O(1)
+Code:
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        # return self.method1(words, order)
+        # return self.method2(words, order)
+        return self.method3(words, order)
+    
+    
+    def method1(self, words, order):
+        """
+        Time: O(N) where N is the number of words
+        Space: O(1) we only use 26 characters space to store the order
+        """
+        d = {}
+        for idx, cha in enumerate(order):  # Time: O(26), Space:O(26)
+            d[cha] = idx
+            
+        for pre, cur in zip(words, words[1:]):  # Time: O(N)
+            if len(pre) > len(cur) and cur == pre[:len(cur)]:
+                return False
+            
+            for cha_pre, cha_cur in zip(pre, cur):  # Time: O(20)
+                if d[cha_pre] > d[cha_cur]:
+                    return False
+                elif d[cha_pre] < d[cha_cur]:
+                    break
+            
+        return True
+    
+    
+    def method2(self, words, order):
+        """
+        Time: O(N)
+        Space: O(1)
+        """
+        d = {}
+        for idx, cha in enumerate(order):
+            d[cha] = idx
+            
+        for i in range(len(words) - 1):
+            for j in range(len(words[i])):
+                if j >= len(words[i+1]):
+                    return False
+                if words[i][j] != words[i+1][j]:
+                    if d[words[i][j]] > d[words[i+1][j]]:
+                        return False
+                    break
+        return True
+
+    
+    def method3(self, words, order):
+        """
+        Time: O(N)
+        Space: O(1)
+        """
+        d = {c: i for i, c in enumerate(order)}
+        words = [[d[char] for char in word] for word in words]
+        return all(w1 <= w2 for w1, w2 in zip(words, words[1:]))
+
+
+==================================================================================================================================================================
+
+
+680. Valid Palindrome II
+Easy
+Logic:
+	Use 2 pointer: p1 -> 0, p2 -> len(s)-1
+        Compare s[p1] and s[p2], once s[p1] != s[p2]: delete s[p1] or s[p2]
+Code:
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        return self.method(s)
+        
+        
+    def method(self, s):
+        """
+        assume N characters in s
+        Time: O(N)
+        Space: O(1)
+        """
+        p1, p2 = 0, len(s) - 1
+        while p1 < p2:            # O(N*1/2)
+            if s[p1] != s[p2]:
+                temp1 = s[:p1] + s[p1+1:]
+                temp2 = s[:p2] + s[p2+1:]
+                return temp1 == temp1[::-1] or temp2 == temp2[::-1]
+            p1 += 1
+            p2 -= 1
+            
+        return True
+
+
+==================================================================================================================================================================
+
+
+1428. Leftmost Column with at Least a One
+Medium
+Logic:
+	method1:
+		retrieve number in the matrix one by one, and return the 1st 1 in this matrix
+	method2:
+		use binary search to search each row (get by a for loop), store the position of 1, and return the minimum position.
+Code:
+# """
+# This is BinaryMatrix's API interface.
+# You should not implement it, or speculate about its implementation
+# """
+#class BinaryMatrix(object):
+#    def get(self, row: int, col: int) -> int:
+#    def dimensions(self) -> list[]:
+
+class Solution:
+    def leftMostColumnWithOne(self, binaryMatrix: 'BinaryMatrix') -> int:
+        # return self.method1(binaryMatrix)
+        return self.method2(binaryMatrix)
+        
+        
+    def method1(self, binaryMatrix):
+        rows, cols = binaryMatrix.dimensions()  # [rows, cols]
+        temp = cols + 1
+        
+        for r in range(rows):
+            for c in range(cols):
+                num = binaryMatrix.get(r, c)
+                if num == 1:
+                    temp = min(temp, c)
+                    break
+        return -1 if temp > cols else temp
+    
+    
+    def method2(self, binaryMatrix):
+        rows, cols = binaryMatrix.dimensions()
+        temp = cols + 1
+        
+        for row in range(rows):
+        
+            p1, p2 = 0, cols - 1
+            while p1 < p2:
+                mid = (p1 + p2) // 2
+                if binaryMatrix.get(row, mid) == 0:
+                    p1 = mid + 1
+                else:
+                    p2 = mid
+                    
+            if binaryMatrix.get(row, p1) == 1:
+                temp = min(temp, p1)
+                
+        return -1 if temp > cols else temp
+
+
+==================================================================================================================================================================
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+    
+    
+
