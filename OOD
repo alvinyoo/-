@@ -1,0 +1,7 @@
+OOD三步万能解法
+	时间、地点、人物、事件的起因、经过、结果
+	人物 --进入--> 内容 --出去--> 结果
+
+
+Parking Lot
+Vehicle --进入--> ParkingSpot --出去--> Ticket

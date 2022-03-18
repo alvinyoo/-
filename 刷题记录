@@ -64,7 +64,7 @@ class Solution:
         return all(w1 <= w2 for w1, w2 in zip(words, words[1:]))
 
 
-==================================================================================================================================================================
+================================================================================================================================================================== Meta
 
 
 680. Valid Palindrome II
@@ -96,7 +96,7 @@ class Solution:
         return True
 
 
-==================================================================================================================================================================
+================================================================================================================================================================== Meta
 
 
 1428. Leftmost Column with at Least a One
@@ -154,7 +154,7 @@ class Solution:
         return -1 if temp > cols else temp
 
 
-==================================================================================================================================================================
+================================================================================================================================================================== Meta
 
 
 973. K Closest Points to Origin
@@ -189,7 +189,129 @@ class Solution:
         return ans
 
 
-==================================================================================================================================================================
+================================================================================================================================================================== Meta
+
+
+1570. Dot Product of Two Sparse Vectors
+Medium
+Logic:
+	Go through all elements in two vectors, and if both the numbers in these 2 vectors are not 0, times them and plus the result to the answer
+Code:
+class SparseVector:
+    def __init__(self, nums: List[int]):
+        self.array = nums
+
+    # Return the dotProduct of two sparse vectors
+    def dotProduct(self, vec: 'SparseVector') -> int:
+        return self.method1(vec)
+    
+    def method1(self, vec):
+        res = 0
+        for num1, num2 in zip(self.array, vec.array):
+            res += num1 * num2
+        return res
+
+# Your SparseVector object will be instantiated and called as such:
+# v1 = SparseVector(nums1)
+# v2 = SparseVector(nums2)
+# ans = v1.dotProduct(v2)
+
+
+================================================================================================================================================================== Meta
+
+
+938. Range Sum of BST
+Easy
+Logic:
+	method1:
+		get all node's values into a array, and search all values in the array one by one, append matched value into answer array
+	method2:
+		Since this tree is a binary search tree, which means the smaller value would be at the left side and greater value would be at the right side
+		So check the current value, if in the range, add the value into answer, otherwise,
+		if the current value smaller than the range, go search the right side tree
+		if the current value greater than the range, go search the left side tree
+Code:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
+        # return self.method1(root, L, R)
+        return self.method2(root, L, R)
+        
+        
+    def method1(self, node, L, R):
+        """
+        Time: O(N^2)
+        Space: O(N)
+        """
+        ans = 0  # Space: O(1)
+        values = []  # Space: O(N)
+
+        def get_values(tree):
+            if tree:
+                values.append(tree.val)
+                get_values(tree.left)
+                get_values(tree.right)
+
+        get_values(node)  # Tiem: O(N)
+
+        for n in values:  # Time: O(N)
+            if n >= L and n <= R:
+                ans += n
+        return ans
+
+    def method2(self, node, L, R):
+        """
+        Time: O(N)
+        Space: O(1)
+        """
+        if node:
+            if node.val < L:
+                return self.method2(node.right, L, R)
+            elif node.val > R:
+                return self.method2(node.left, L, R)
+            else:
+                return node.val + self.method2(node.left, L, R) + self.method2(node.right, L, R)
+        return 0
+    
+
+================================================================================================================================================================== Meta
+
+
+1762. Buildings With an Ocean View
+Medium
+Logic:
+	check from the right side, and start from the 2nd building from the right side, mark the highest building,
+	if the current building is greater than the highest, add it into the answer and update the highest
+Code:
+class Solution:
+    def findBuildings(self, heights: List[int]) -> List[int]:
+        return self.method1(heights)
+        
+    def method1(self, heights):
+        """
+        Assume it has N buildings there, and M buildings has ocean view
+        Time: O(N)
+        Space: O(M)
+        """
+        ans = []  # Space:O(M)
+        max_building = heights[-1]  # Space: O(1)
+        ans.append(len(heights) - 1)
+        
+        if len(heights) > 1:
+            for i in range(len(heights)-2, -1, -1):  # Time: O(N-1)
+                if heights[i] > max_building:
+                    ans.append(i)
+                    max_building = heights[i]
+                    
+        return ans[::-1] 
+
+
+================================================================================================================================================================== Meta
 
 
 0000. HeadLine
@@ -198,9 +320,80 @@ Logic:
 	Logic
 Code:
 Code    
-        return -1 if temp > cols else temp
 
 
+================================================================================================================================================================== Meta
 
-    
 
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code
