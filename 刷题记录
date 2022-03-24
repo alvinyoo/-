@@ -439,12 +439,49 @@ class Solution:
 ================================================================================================================================================================== Meta
 
 
-0000. HeadLine
-Difficulty
+1650. Lowest Common Ancestor of a Binary Tree III
+Medium
 Logic:
-	Logic
+	Use Node.parent feature to trace the parent of each node in this tree, to do that, we can consider DFS algorithm.
+	In DFS function, call Node.parent to check every node, if there is no parent anymore, which means we reach the root node, return and break dis,
+	otherwise, call DFS() function it self to check the parent of node.parent.
+	Mark the node we met, we could use a hash map to do so. Once we meet a new node, store the node as key, the times we meet it as value.
+	Use DFS to trace p, then to trace q.
+	Check all items in the hash map, if any node we met greater than 2 times, that is an ancestor. Since hash map is sorted in Python, the first ancestor
+	is the target we looking for.
 Code:
-Code    
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+        self.parent = None
+"""
+
+class Solution:
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        """
+        Time: O(N) = O(P) + O(Q)
+        Sapce: O(N)
+        """
+        counter = collections.defaultdict(int)
+        self.root = None  # Space: O(1)
+        
+        def DFS(node):  
+            if node.parent == None:
+                self.root = node
+                return
+            counter[node] += 1
+            DFS(node.parent)
+            
+        DFS(p)  # Time: O(P)
+        DFS(q)  # Time: O(Q)
+        for node, times in counter.items():
+            if times >= 2:
+                return node
+        return self.root    
 
 
 ================================================================================================================================================================== Meta

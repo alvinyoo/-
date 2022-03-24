@@ -103,7 +103,7 @@ public class ParkingSpot {                                                      
 		available = true;                                                    |
 	}                                                                            |
 }                                                                                    | 
-                                                                                     |------->> ParkingSpot
+                                                                                     |
 public class Level {                                                                 |                    
 	private List<ParkingSpot> spotList;                                          |                                           
 	private int availableCount;                                                  |                                   
@@ -112,13 +112,48 @@ public class Level {                                                            
 	public Level(int availableCount) {                                           |                                          
 		this.availableCount = NUM_SPOTS;                                     |                                                
 	}                                                                            |         
+                                                                                     |
+	public boolean isAvailable() {                                               |------->> ParkingSpot
+		return available;                                                    |
+	}                                                                            |
+                                                                                     |
+	public int getAvailableCount() {                                             |
+		return availableCount;                                               |
+	}                                                                            |
+                                                                                     |
+	public void updateAvailableCount(int availableCount) {                       |
+		this.availableCount = availableCount;                                |
+	}                                                                            |
 }                                                                                    |  
                                                                                      |
 public class ParkingLot {                                                            |                        
 	private String name;                                                         |                            
 	private boolean available;                                                   |                                  
 	private List<Level> levels;                                                  |                                   
-	                                                                             |        
+                                                                                     |
+	public void enter(Vehicle vehicle) {                                         |
+		                                                                     |
+	}                                                                            |
+                                                                                     |	
+	public boolean isAvailable() {                                               |
+		return available;                                                    |
+	}                                                                            |        
+                                                                                     |
+	public Level findLevelAvailable() {                                          |
+		return null;                                                         |
+	}                                                                            |
+                                                                                     |
+	public int getAvailableCount() {                                             |
+		return 1;                                                            |
+	}                                                                            |
+                                                                                     |
+	public Ticket exit(Vehicle vehicle) {                                        |
+		return null;                                                         |
+	}                                                                            |
+                                                                                     |
+	public float calculate(Ticket ticket) {                                      |
+		return 0;                                                            |
+	}                                                                            |
 }                                                                                    | 
                                                                                      |
 public class Constants {                                                             |                        
@@ -126,8 +161,7 @@ public class Constants {                                                        
 	public static final int NUM_SMALL = 100;                                     |                                                
 	public static final int NUM_MEDIUM = 100;                                    |                                                 
 	public static final int NUM_LARGE = 100;                                     |                                                
-}                                               --------------------------------------  
-                                                                                     
+}                                               --------------------------------------                                                                                     
                                                    
 public class Ticket {                       ------------------------------------------       
 	private String id;                                                           |                                           
