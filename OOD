@@ -161,7 +161,11 @@ public class Constants {                                                        
 	public static final int NUM_SMALL = 100;                                     |                                                
 	public static final int NUM_MEDIUM = 100;                                    |                                                 
 	public static final int NUM_LARGE = 100;                                     |                                                
+<<<<<<< HEAD
 }                                               --------------------------------------                                                                                     
+=======
+}                                               --------------------------------------                                              
+>>>>>>> a27d893bbade1b28f5594f047b3933b3246315c7
                                                    
 public class Ticket {                       ------------------------------------------       
 	private String id;                                                           |                                           
