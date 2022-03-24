@@ -314,6 +314,186 @@ class Solution:
 ================================================================================================================================================================== Meta
 
 
+415. Add Strings
+Easy
+Logic:
+	method1:
+		enforce numbers transfer into integer and sum them up
+	method2:
+		transfer number string into number list and each element in the array is a single number. Use a while loop and pop the right side
+		number each time(trans them into integer or use ord() function to minus ord('0')), add them up, record the carry num by use 
+		remainder division, then append the mod num into answer array.
+Code:
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        # return self.method1(num1, num2)
+        # return self.method2(num1, num2)
+        return self.method3(num1, num2)
+    
+    def method1(self, num1, num2):
+        return str(int(num1) + int(num2))
+    
+    def method2(self, num1, num2):
+        num1, num2 = list(num1), list(num2)
+        carry = 0
+        res = []
+        
+        while len(num1) > 0 or len(num2) > 0:
+            temp1 = int(num1.pop()) if len(num1) > 0 else 0
+            temp2 = int(num2.pop()) if len(num2) > 0 else 0
+            temp = temp1 + temp2 + carry
+            res.append(temp % 10)
+            carry = temp // 10
+            
+        if carry:
+            res.append(carry)
+        return ''.join(str(i) for i in res)[::-1]
+    
+    def method3(self, num1, num2):
+        num1, num2 = list(num1), list(num2)
+        carry, res = 0, []
+        
+        while len(num1) > 0 or len(num2) > 0:
+            temp1 = ord(num1.pop()) - ord('0') if len(num1) > 0 else 0
+            temp2 = ord(num2.pop()) - ord('0') if len(num2) > 0 else 0
+            temp = temp1 + temp2 + carry
+            res.append(temp % 10)
+            carry = temp // 10
+            
+        if carry:
+            res.append(carry)
+        return ''.join([str(i) for i in res])[::-1]    
+
+
+================================================================================================================================================================== Meta
+
+
+314. Binary Tree Vertical Order Traversal
+Medium
+Logic:
+	use a map to store position(key) and node lists(value), return sorted map values sorted by key
+	before that, use queue to store current layer and position(left child means position-1, right means position+1)
+Code:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        return self.method(root)
+    
+    def method(self, root):
+        """
+        map: key -> position, value -> [node.values]
+        queue = [(node, position)]
+        """
+        queue = collections.deque([(root, 0)])
+        hash_map = collections.defaultdict(list)
+        
+        while queue:
+            node, position = queue.popleft()
+            if node:
+                hash_map[position].append(node.val)
+                queue.append((node.left, position - 1))
+                queue.append((node.right, position + 1))
+        # print(hash_map)
+        return [hash_map[l] for l in sorted(hash_map)]
+    
+
+
+================================================================================================================================================================== Meta
+
+
+199. Binary Tree Right Side View
+Medium
+Logic:
+	Since one layer can only has one right-side-view, we can use a parameter "layer" to identify which layer we are in helper function,
+	once the real layer equals layer, append the current node's value into answer array, then call the helper function itself, 
+	pass the next layer, start from right side, and layer+1.
+Code:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        return self.method(root)
+    
+    
+    def method(self, root):
+        ans = []
+        def helper(node, layer):
+            if node:
+                if layer == len(ans):
+                    ans.append(node.val)
+                helper(node.right, layer+1)
+                helper(node.left, layer+1)
+        helper(root, 0)
+        return ans    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code    
+
+
+================================================================================================================================================================== Meta
+
+
+0000. HeadLine
+Difficulty
+Logic:
+	Logic
+Code:
+Code
+
+
+================================================================================================================================================================== Meta
+
+
 0000. HeadLine
 Difficulty
 Logic:

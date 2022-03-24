@@ -1,7 +1,140 @@
 OOD三步万能解法
 	时间、地点、人物、事件的起因、经过、结果
 	人物 --进入--> 内容 --出去--> 结果
+OOD加分技巧
+	Enums: 枚举情况
+	Abstract/Interface: 扩展性，维护性
+	final &#& public static final num: 变量多样性
+	Exception: 极限情况，可以用在所有主体
+	Design Pattern: 终极技巧，不是必须
+类图中的人物可以用的四个加分项：1. Enums, 2. Protected, 3. Final, 4. Abstract
+
+
+
+
+
 
 
 Parking Lot
-Vehicle --进入--> ParkingSpot --出去--> Ticket
+ ---------------------------------------------------------
+｜     Vehicle --进入--> ParkingSpot --出去--> Ticket      ｜  类图
+ ---------------------------------------------------------
+
+Vehicle: 1. Enums, 2. Protected, 3. Final, 4. Abstract
+ParkingSpot: 1. 必加Class, 2. Constants: public static final
+Ticket: 1. Exception, 2. Design Pattern
+
+Vehicle:
+考虑车的大小Size：大（track），中（car），小（motorcycle），可以用Enum
+不同停车场类型：露天停车场（parking lot），楼内停车场（in-building parking lot）
+停车位：残疾人停车位（handicapped people），大中小停车位（size）
+收费
+
+
+Code:
+public enum VehicleType {                             --------------------------------
+	SMALL,                                                                       |
+	MEDIUM,                                                                      |
+	LARGE                                                                        |
+}                                                                                    |
+                                                                                     |
+public abstract class Vehicle {                                                      |                               
+	protected String name;                                                       |                              
+	protected String plateNo;                                                    |                                 
+	private final VehicleType type;                                              |                                       
+                                                                                     |
+	public Vehicle(VehicleType type) {                                           |                                          
+		this.type = type;                                                    |                                 
+	}                                                                            |         
+}                                                                                    | 
+                                                                                     |------->> Vehicle
+public class Car extends Vehicle {                                                   |                                  
+	public Car() {                                                               |                      
+		super(VehicleType.MEDIUM);                                           |                                          
+		name = "Alvin";                                                      |                               
+	}                                                                            |         
+}                                                                                    | 
+                                                                                     |
+public class Truck extends Vehicle {                                                 |                                    
+	public Truck() {                                                             |                        
+		super(VehicleType.LARGE);                                            |                                         
+		name = "Leo";                                                        |                             
+	}                                                                            |         
+}                                                                                    | 
+                                                                                     |
+public class Motorcycle extends Vehicle {                                            |                                         
+	public Motorcycle() {                                                        |                             
+		super(VehicleType.SMALL);                                            |                                         
+		name = "Frank";                                                      |                               
+	}                                                                            |         
+}                                                  -----------------------------------
+
+public enum ParkingSpotType {                      -----------------------------------                            
+	SMALL,                                                                       |              
+	MEDIUM,                                                                      |               
+	LARGE,                                                                       |              
+	HANDICAPPED                                                                  |                   
+}                                                                                    | 
+                                                                                     |
+public class ParkingSpot {                                                           |                          
+	private final ParkingSpotType type;                                          |                                           
+	private boolean available;                                                   |                                  
+	private Vehicle vehicle;                                                     |                                
+	private int spotNo;                                                          |                           
+	private Level level;                                                         |                            
+                                                                                     |
+	public ParkingSpot(ParkingSpotType type) {                                   |                                                  
+		this.type = type;                                                    |                                 
+	}                                                                            |         
+	                                                                             |
+	public boolean isAvailable() {                                               |
+		return available;                                                    |
+	}                                                                            |
+                                                                                     |
+	public boolean canVehicleFit(Vehicle vehicle) {                              |
+		return true;                                                         |
+	}                                                                            |
+                                                                                     |
+	public void takeSpote(Vehicle vehicle) {                                     |
+		available = false;                                                   |
+	}                                                                            |
+                                                                                     |
+	public void leaveSpote(Vehicle vehicle) {                                    |
+		available = true;                                                    |
+	}                                                                            |
+}                                                                                    | 
+                                                                                     |------->> ParkingSpot
+public class Level {                                                                 |                    
+	private List<ParkingSpot> spotList;                                          |                                           
+	private int availableCount;                                                  |                                   
+	private boolean avaiable;                                                    |                                 
+                                                                                     |
+	public Level(int availableCount) {                                           |                                          
+		this.availableCount = NUM_SPOTS;                                     |                                                
+	}                                                                            |         
+}                                                                                    |  
+                                                                                     |
+public class ParkingLot {                                                            |                        
+	private String name;                                                         |                            
+	private boolean available;                                                   |                                  
+	private List<Level> levels;                                                  |                                   
+	                                                                             |        
+}                                                                                    | 
+                                                                                     |
+public class Constants {                                                             |                        
+	public static final int NUM_SPOTS = 100;                                     |                                                
+	public static final int NUM_SMALL = 100;                                     |                                                
+	public static final int NUM_MEDIUM = 100;                                    |                                                 
+	public static final int NUM_LARGE = 100;                                     |                                                
+}                                               --------------------------------------  
+                                                                                     
+                                                   
+public class Ticket {                       ------------------------------------------       
+	private String id;                                                           |                                           
+	private float amount;                                                        |                                  
+	private Vehicle vehicle;                                                     |                                
+	private Date enterTime;                                                      |------->> Ticket                           
+	private Date exitTime;                                                       |
+	private boolean payStatus;                                                   |
+	private String paymentMethod; // credit, debit, cash                         |                            
+ }                                    ------------------------------------------------ 
