@@ -487,12 +487,48 @@ class Solution:
 ================================================================================================================================================================== Meta
 
 
-0000. HeadLine
-Difficulty
+215. Kth Largest Element in an Array
+Medium
 Logic:
-	Logic
+	Use quick sort. Randomly choose one number from nums array, split nums into three parts, left part contains all numbers greater than pivot,
+	right part contains all numbers less than pivot, and the mid part contains all numbers equal to pivot.
+	Find which part the K belongs to, call the function itself until k belongs to mid.
 Code:
-Code    
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        # return self.built_in(nums, k)
+        return self.quick_sort(nums, k)
+        
+    def built_in(self, nums, k):
+        return sorted(nums, reverse=True)[k-1]
+            
+    def quick_sort(self, nums, k):
+        """
+        quick sort
+	Time: O(N) -> average case, O(N^2) -> worst case
+        Space: O(1)
+        """
+        pivot = random.choice(nums)
+        left, mid, right = [], [], []
+        for n in nums:
+            if n > pivot:
+                left.append(n)
+            elif n < pivot:
+                right.append(n)
+            else:
+                mid.append(n)
+        # |----left----|----mid---|---right---|
+        #  --------------nums-----------------
+        
+        c1 = len(left)
+        c2 = len(mid)
+        
+        if k <= c1:
+            return self.quick_sort(left, k)
+        elif k > c1 + c2:
+            return self.quick_sort(right, k - c1 - c2)
+        else:
+            return mid[0]       
 
 
 ================================================================================================================================================================== Meta
